@@ -15,6 +15,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
+        console.log(`MongoDB URL: ${process.env.MONGO_DB_URL}`);
         console.log(configService.get<string>('MONGO_DB_URL'));
         return {
             uri: configService.get<string>('MONGO_DB_URL'),
