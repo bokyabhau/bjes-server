@@ -10,7 +10,7 @@ export class WebhooksController {
   handleIncomingMessage(@Body() body: any): string {
     // Here you would handle the incoming webhook message
     // For now, we just log it and return a success message
-    console.log('Received webhook:', body);
+    console.log(JSON.stringify(body));
     return 'Webhook received successfully';
   }
 
