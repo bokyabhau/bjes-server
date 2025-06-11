@@ -5,5 +5,6 @@ import { UsersModule } from 'src/users/users.module';
 @Module({
   providers: [WhatsappService],
   imports: [UsersModule],
+  exports: [WhatsappService],
 })
 export class WhatsappModule {}
