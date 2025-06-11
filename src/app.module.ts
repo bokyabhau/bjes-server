@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { WebhooksModule } from './webhooks/webhooks.module';
+import { WhatsappModule } from './whatsapp/whatsapp.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { WebhooksModule } from './webhooks/webhooks.module';
     AuthModule,
     UsersModule,
     WebhooksModule,
+    WhatsappModule,
   ],
   controllers: [AppController],
   providers: [AppService],
