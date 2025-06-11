@@ -17,7 +17,7 @@ type WhatsAppEntryLocationMessage = {
   url?: string;
 };
 
-type WhatsAppEntryMessage = {
+export type WhatsAppEntryMessage = {
   from: string;
   id: string;
   text?: WhatsAppEntryTextMessage;

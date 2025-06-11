@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IncomingWhatsAppMessage, WhatsAppMessageType } from './whatsapp.types';
+import { IncomingWhatsAppMessage, WhatsAppEntryMessage, WhatsAppMessageType } from './whatsapp.types';
 import { UsersService } from 'src/users/users.service';
 import axios from 'axios';
 
@@ -27,8 +27,13 @@ export class WhatsappService {
   ): Promise<void> {
     const messageEntry = message.entry[0];
     const change = messageEntry.changes[0];
-    const contact = change.value.contacts[0];
-    const messageData = change.value.messages[0];
+    const { contacts, messages } = change.value;
+    const contact = Array.isArray(contacts) ? contacts[0] : {};
+    const messageData: WhatsAppEntryMessage | null = Array.isArray(messages) ? messages[0] : null;
+
+    if(!messageData) {
+      return;
+    }
 
     const type = messageData.type;
 
