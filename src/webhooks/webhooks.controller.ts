@@ -3,16 +3,14 @@ import { Response } from 'express';
 import { User } from 'src/users/user.schema';
 import { UsersService } from 'src/users/users.service';
 import { IncomingWhatsAppMessage } from '../whatsapp/whatsapp.types';
+import { WhatsappService } from 'src/whatsapp/whatsapp.service';
 
 @Controller('webhooks')
 export class WebhooksController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly whatsappService: WhatsappService) {}
   @Post()
-  handleIncomingMessage(@Body() body: any): string {
-    // Here you would handle the incoming webhook message
-    // For now, we just log it and return a success message
-    console.log(JSON.stringify(body));
-    return 'Webhook received successfully';
+  handleIncomingMessage(@Body() body: any): Promise<void> {
+    return this.whatsappService.handleIncomingMessage(body);
   }
 
   @Get()
