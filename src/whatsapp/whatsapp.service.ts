@@ -46,7 +46,7 @@ export class WhatsappService {
 
     if (!existingUser && !isRegistrationMessage) {
       await this.setMessageReadStatus(messageData.id);
-      await this.sendMessage(messageData.from, 'Please register first. | आधी नोंदणी करा आणि नंतर पुन्हा प्रयत्न करा.');
+      await this.sendMessage(messageData.from, 'Please register first.');
       return;
     }
 
