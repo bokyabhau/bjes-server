@@ -10,6 +10,7 @@ export class WebhooksController {
   constructor(private readonly whatsappService: WhatsappService) {}
   @Post()
   handleIncomingMessage(@Body() body: any): Promise<void> {
+    console.log(JSON.stringify(body));
     return this.whatsappService.handleIncomingMessage(body);
   }
 

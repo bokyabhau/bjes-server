@@ -10,7 +10,15 @@ export class WhatsappService {
   private readonly apiId: string = process.env.WHATSAPP_API_ID!;
   private readonly messagesEndPoint: string =
     process.env.WHATSAPP_API_MESSAGES_END_POINT!;
+  private readonly whatsappApiToken: string = process.env.WHATSAPP_API_TOKEN!;
   private readonly messagesApiUrl: string = `${this.apiUrl}/${this.apiVersion}/${this.apiId}/${this.messagesEndPoint}/`;
+
+  private readonly messageAxios = axios.create({
+    baseURL: this.messagesApiUrl,
+    headers: {
+      Authorization: `Bearer ${this.whatsappApiToken}`,
+    },
+  });
 
   constructor(private readonly userService: UsersService) {}
 
@@ -49,36 +57,20 @@ export class WhatsappService {
   }
 
   private async setMessageReadStatus(messageId: string): Promise<void> {
-    await axios.post(
-      this.messagesApiUrl,
-      {
-        messaging_product: 'whatsapp',
-        status: 'read',
-        message_id: messageId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.WHATSAPP_API_TOKEN}`,
-        },
-      },
-    );
+    await this.messageAxios.post(this.messagesApiUrl, {
+      messaging_product: 'whatsapp',
+      status: 'read',
+      message_id: messageId,
+    });
   }
 
   private async sendMessage(to: string, message: string): Promise<void> {
-    await axios.post(
-      this.messagesApiUrl,
-      {
-        messaging_product: 'whatsapp',
-        to,
-        text: {
-          body: message,
-        },
+    await this.messageAxios.post(this.messagesApiUrl, {
+      messaging_product: 'whatsapp',
+      to,
+      text: {
+        body: message,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.WHATSAPP_API_TOKEN}`,
-        },
-      },
-    );
+    });
   }
 }
